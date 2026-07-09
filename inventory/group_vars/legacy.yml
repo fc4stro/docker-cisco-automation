@@ -1,0 +1,22 @@
+---
+# Dispositivos LEGADOS que exigem algoritmos SSH antigos.
+# Trate a maioria como IOS clássico (ajuste se for NX-OS legado).
+ansible_network_os: cisco.ios.ios
+
+# >>> SSH LEGADO ESCOPADO A ESTE GRUPO <<<
+# Habilita kex/hostkey/ciphers antigos APENAS para estes hosts, sem
+# enfraquecer o SSH de todo o ambiente. Passado direto ao cliente ssh.
+#
+# AVISO DE SEGURANÇA: estes algoritmos são fracos e obsoletos. Use somente
+# para equipamentos legados em labs ou redes controladas.
+ansible_ssh_common_args: >-
+  -o KexAlgorithms=+diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+  -o HostKeyAlgorithms=+ssh-rsa
+  -o PubkeyAcceptedAlgorithms=+ssh-rsa
+  -o Ciphers=+aes128-cbc,aes256-cbc,3des-cbc
+  -o StrictHostKeyChecking=no
+  -o UserKnownHostsFile=/dev/null
+
+# Observação: com ansible_network_cli_ssh_type=paramiko, o paramiko negocia
+# muitos desses algoritmos automaticamente. Se precisar forçar via cliente
+# OpenSSH, troque para 'libssh'/'openssh' e mantenha os args acima.

@@ -1,0 +1,23 @@
+# Reduz o contexto de build e evita vazar secrets para a imagem.
+.git
+.gitignore
+.env
+*.env
+
+# Chaves e material sensível — NUNCA na imagem.
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+known_hosts
+
+# Documentação/ferramentas que não precisam ir para a imagem.
+README.md
+Makefile
+atividade_desejada.MD
+
+# Artefatos Python/Ansible.
+__pycache__/
+*.pyc
+*.retry
+.vault_pass*

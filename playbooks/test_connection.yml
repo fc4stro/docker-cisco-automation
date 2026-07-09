@@ -1,0 +1,39 @@
+---
+# Playbook simples para validar conectividade e coleta de facts.
+# Uso:
+#   ansible-playbook playbooks/test_connection.yml
+#   ansible-playbook playbooks/test_connection.yml --limit ios
+#   ansible-playbook playbooks/test_connection.yml --limit nxos
+- name: Testar conexão com dispositivos Cisco
+  hosts: cisco
+  gather_facts: false          # facts de rede vêm dos módulos *_facts
+  connection: ansible.netcommon.network_cli
+
+  tasks:
+    # --- IOS / IOS XE ---------------------------------------------------
+    - name: Coletar facts (IOS / IOS XE)
+      cisco.ios.ios_facts:
+        gather_subset: min
+      when: ansible_network_os == 'cisco.ios.ios'
+
+    # --- NX-OS ----------------------------------------------------------
+    - name: Coletar facts (NX-OS)
+      cisco.nxos.nxos_facts:
+        gather_subset: min
+      when: ansible_network_os == 'cisco.nxos.nxos'
+
+    # --- Resultado ------------------------------------------------------
+    - name: Mostrar hostname e versão
+      ansible.builtin.debug:
+        msg: >-
+          Conectado a {{ ansible_net_hostname | default(inventory_hostname) }}
+          — modelo {{ ansible_net_model | default('n/d') }},
+          versão {{ ansible_net_version | default('n/d') }}
+
+    # Alternativa CLI genérica (funciona em IOS/IOS XE/NX-OS):
+    # - name: Rodar 'show version'
+    #   ansible.netcommon.cli_command:
+    #     command: show version
+    #   register: showver
+    # - ansible.builtin.debug:
+    #     var: showver.stdout_lines

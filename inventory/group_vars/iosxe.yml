@@ -1,0 +1,4 @@
+---
+# Cisco IOS XE — usa a MESMA collection do IOS (cisco.ios).
+# Não existe uma collection separada "iosxe".
+ansible_network_os: cisco.ios.ios

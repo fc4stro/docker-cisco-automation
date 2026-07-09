@@ -1,0 +1,3 @@
+---
+# Cisco IOS
+ansible_network_os: cisco.ios.ios

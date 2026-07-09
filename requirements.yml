@@ -1,0 +1,12 @@
+---
+# Collections Ansible necessárias para automação Cisco.
+# Instaladas no build via: ansible-galaxy collection install -r requirements.yml
+collections:
+  - name: cisco.ios          # Cisco IOS e IOS XE
+    version: ">=8.0.0"
+  - name: cisco.nxos         # Cisco NX-OS
+    version: ">=9.0.0"
+  - name: ansible.netcommon  # conexões de rede (network_cli, netconf)
+    version: ">=6.1.0"
+  - name: ansible.utils      # filtros/plugins utilitários (ex.: ipaddr, cli_parse)
+    version: ">=5.1.0"

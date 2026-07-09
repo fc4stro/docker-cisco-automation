@@ -1,0 +1,20 @@
+# Dependências Python — pinadas para reprodutibilidade.
+# Ajuste as versões conforme necessidade do seu ambiente/lab.
+
+# Ansible (pacote community; inclui ansible-core).
+ansible==10.7.0
+
+# Conexão SSH / NETCONF.
+paramiko==3.5.1
+ansible-pylibssh==1.2.2
+ncclient==0.6.16
+
+# Automação de rede (uso direto e por módulos/collections).
+netmiko==4.5.0
+
+# Parsing de saída de CLI (show commands).
+textfsm==1.1.3
+ntc-templates==7.8.0
+
+# Filtros/consultas usados por ansible.utils e playbooks.
+jmespath==1.0.1

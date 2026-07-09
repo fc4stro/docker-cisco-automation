@@ -1,0 +1,38 @@
+# SSH client config do projeto ansible-cisco.
+# Montado no container em /home/ansible/.ssh/config.
+
+# ---------------------------------------------------------------------------
+# Padrão para TODOS os hosts: sem prompt de aceite de chave nos testes iniciais.
+# (Não enfraquece algoritmos — apenas evita a checagem de known_hosts.)
+# ---------------------------------------------------------------------------
+Host *
+    StrictHostKeyChecking no
+    UserKnownHostsFile /dev/null
+    ServerAliveInterval 30
+    ServerAliveCountMax 3
+
+# ---------------------------------------------------------------------------
+# EXEMPLO ATIVO — SSH LEGADO POR HOST.
+# Algoritmos antigos habilitados APENAS para este equipamento de lab.
+# Ajuste o Host/Hostname para o seu dispositivo legado.
+#
+# AVISO: kex/hostkey/ciphers abaixo são fracos. Use somente em labs
+# ou redes controladas, com equipamentos que não suportam algoritmos modernos.
+# ---------------------------------------------------------------------------
+Host rtr-legacy-01 192.0.2.41
+    KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+    HostKeyAlgorithms +ssh-rsa
+    PubkeyAcceptedAlgorithms +ssh-rsa
+    Ciphers +aes128-cbc,aes256-cbc,3des-cbc
+
+# ---------------------------------------------------------------------------
+# BLOCO GLOBAL LEGADO — DESATIVADO POR PADRÃO (comentado).
+# Descomente APENAS se a maioria dos seus equipamentos for legada e você
+# entender o risco de enfraquecer o SSH para todos os hosts.
+# Preferível manter o ajuste por host (bloco acima).
+# ---------------------------------------------------------------------------
+# Host *
+#     KexAlgorithms +diffie-hellman-group14-sha1,diffie-hellman-group1-sha1
+#     HostKeyAlgorithms +ssh-rsa
+#     PubkeyAcceptedAlgorithms +ssh-rsa
+#     Ciphers +aes128-cbc,aes256-cbc,3des-cbc

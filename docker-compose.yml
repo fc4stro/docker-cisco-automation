@@ -1,0 +1,30 @@
+# Docker Compose v2 (formato services:).
+# Uso:
+#   docker compose build
+#   docker compose run --rm ansible-cisco            # shell interativo
+#   docker compose run --rm ansible-cisco ansible-playbook playbooks/test_connection.yml
+services:
+  ansible-cisco:
+    build:
+      context: .
+    image: ansible-cisco:latest
+    container_name: ansible-cisco
+    working_dir: /ansible
+
+    # Credenciais e variáveis via .env (NÃO versionado — ver .dockerignore/.gitignore).
+    # Copie .env.example para .env e preencha ANSIBLE_NET_USERNAME/PASSWORD.
+    env_file:
+      - .env
+
+    # Bind mounts: edite os arquivos no host, execute no container.
+    volumes:
+      - ./playbooks:/ansible/playbooks
+      - ./inventory:/ansible/inventory
+      - ./ansible.cfg:/ansible/ansible.cfg:ro
+      - ./ssh/config:/home/ansible/.ssh/config:ro
+      # Chaves SSH do host, somente leitura (opcional, se usar auth por chave):
+      # - ~/.ssh/id_rsa:/home/ansible/.ssh/id_rsa:ro
+
+    # Terminal interativo.
+    stdin_open: true
+    tty: true

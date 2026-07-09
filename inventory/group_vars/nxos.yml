@@ -1,0 +1,3 @@
+---
+# Cisco NX-OS (Nexus)
+ansible_network_os: cisco.nxos.nxos

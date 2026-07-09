@@ -1,0 +1,15 @@
+# Secrets e material sensível — nunca versionar.
+.env
+*.env
+!.env.example
+*.pem
+*.key
+id_rsa*
+id_ed25519*
+known_hosts
+.vault_pass*
+
+# Artefatos.
+__pycache__/
+*.pyc
+*.retry
